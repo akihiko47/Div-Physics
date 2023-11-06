@@ -12,7 +12,7 @@
 
 .particle {
   background-color: #49afc1;
-  transition: background-color 0.1s ease-in-out;
+  transition: background-color 0.15s ease-in-out;
 }
 
 .particle:hover {
@@ -24,4 +24,10 @@
 
 #first {
   background-color: #d38b7e;
+  transition: background-color 0.15s ease-in-out;
+}
+
+#first:hover {
+  background-color: #49afc1;
+  box-shadow: 0px 0px 25px 1px rgba(73,175,193,0.56);
 }
