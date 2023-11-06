@@ -13,18 +13,21 @@ class Particle {
         this.radius = radius;
         this.color = color;
         this.anchored = anchored;
+        this.domElement = undefined;
 
-        let element = document.createElement("div");
-        element.style.left = x + "px";
-        element.style.top = y + "px";
-        element.style.width = radius * 2 + "40px";
-        element.style.height = radius * 2 + "40px";
-        element.style.borderRadius = radius + 'px';
-        element.className = 'particle'
-        element.style.position = 'fixed';
-        document.getElementById('main').appendChild(element);
+        if (this.radius) {
+            let element = document.createElement("div");
+            element.style.left = x + "px";
+            element.style.top = y + "px";
+            element.style.width = radius * 2 + "40px";
+            element.style.height = radius * 2 + "40px";
+            element.style.borderRadius = radius + 'px';
+            element.className = 'particle'
+            element.style.position = 'fixed';
+            document.getElementById('main').appendChild(element);
 
-        this.domElement = element;
+            this.domElement = element;
+        }
     }
     
     update(dt) {
@@ -155,5 +158,55 @@ class Mouse {
                 }
             }
         }
+    }
+}
+
+class PhysicsDiv {
+    constructor (x, y, width, height, id, particles, joints) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.id = id;
+        this.p1 = undefined;
+        this.p2 = undefined;
+        this.p3 = undefined;
+        this.p4 = undefined;
+
+        this.domElement = undefined;
+
+        this.create(particles, joints)
+    }
+
+    create(particles, joints) {
+
+        this.p1 = new Particle(this.x, this.y, 5);
+        this.p2 = new Particle(this.x, this.y + this.height, 5);
+        this.p3 = new Particle(this.x + this.width, this.y + this.height, 5);
+        this.p4 = new Particle(this.x + this.width, this.y, 5);
+
+        particles.push(this.p1);
+        particles.push(this.p2);
+        particles.push(this.p3);
+        particles.push(this.p4);
+
+        joints.push(new Joint(this.p1, this.p2));
+        joints.push(new Joint(this.p2, this.p3));
+        joints.push(new Joint(this.p3, this.p4));
+        joints.push(new Joint(this.p4, this.p1));
+        joints.push(new Joint(this.p1, this.p3));
+        joints.push(new Joint(this.p2, this.p4));
+
+        let element = document.createElement("div");
+        element.style.left = this.p1.x_now + "px";
+        element.style.top = this.p1.y_now + "px";
+        element.style.width = this.width + "px";
+        element.style.height = this.height + "px";
+        element.style.transformOrigin = '0px 0px';
+        element.id = this.id
+        element.style.position = 'fixed';
+        document.getElementById('main').appendChild(element);
+
+        this.domElement = element;
     }
 }

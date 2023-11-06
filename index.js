@@ -6,6 +6,7 @@ window.onload = function () {
   let particles = []; // main array of particles
   let springs = []; // main array of springs
   let joints = []; // main array of rigid joints
+  let divs = [];
 
   // update function iterations
   // more substeps => better accuracy
@@ -17,6 +18,8 @@ window.onload = function () {
   let secNow = 0; // variable for storing frame start time
   let secPrev = 0; // variable for storing the end time of the previous frame
   let secPassed = 0; // time betweeen frames
+
+  divs.push(new PhysicsDiv(200, 200, 200, 200, "first", particles, joints))
 
   // MAIN FUNCTION
   function main() {
@@ -31,6 +34,8 @@ window.onload = function () {
     for (let i = 0; i < subSteps; i++) {
       applyGravity(particles, G);
       update(particles, springs, joints, secPassed / subSteps);
+      
+      drawDivs(divs);
       drawParticles(particles);
 
       // this function prevents particles from falling off the screen
@@ -56,12 +61,12 @@ window.onload = function () {
     // add rectangle edges
     // spring => particle1, particle2, strength, damping, width(default=0) color(default=white)
     // add spring to springs list to update and draw
-    springs.push(new Spring(particles[0], particles[1], 0.8, 0.5, 5));
-    springs.push(new Spring(particles[1], particles[2], 0.8, 0.5, 5));
-    springs.push(new Spring(particles[2], particles[3], 0.8, 0.5, 5));
-    springs.push(new Spring(particles[3], particles[0], 0.8, 0.5, 5));
-    springs.push(new Spring(particles[0], particles[2], 0.8, 0.5, 5));
-    springs.push(new Spring(particles[3], particles[1], 0.8, 0.5, 5));
+    joints.push(new Joint(particles[0], particles[1]));
+    joints.push(new Joint(particles[1], particles[2]));
+    joints.push(new Joint(particles[2], particles[3]));
+    joints.push(new Joint(particles[3], particles[0]));
+    joints.push(new Joint(particles[0], particles[2]));
+    joints.push(new Joint(particles[3], particles[1]));
   }
 
   function addRope() {
@@ -82,7 +87,7 @@ window.onload = function () {
     }
   }
 
-  addRect();
+  // addRect();
   addRope();
   main();
 };

@@ -12,6 +12,17 @@ function drawParticles(particles) {
     }
 }
 
+function drawDivs(divs) {
+    for (let div of divs) {
+        let angle = Math.atan2(div.p4.y_now - div.p1.y_now, div.p4.x_now - div.p1.x_now);
+        
+        div.domElement.style.transform = 'rotate('+angle+'rad)';
+
+        div.domElement.style.left = div.p1.x_now + "px";
+        div.domElement.style.top = div.p1.y_now + "px";
+    }
+}
+
 // function drawSprings(content, springs) {
 //     for (let spring of springs) {
 //         if (spring.width) {
