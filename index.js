@@ -22,6 +22,12 @@ window.onload = function () {
   let mouse = new Mouse();
 
   divs.push(new PhysicsDiv(width/2-125, height/2, 250, 150, "div-first-test", particles, joints));
+  particles.push(new Particle(width/2 - 200, height/2 - 200, 15, "#49afc1", true));
+  particles.push(new Particle(width/2 + 200, height/2 - 200, 15, "#49afc1", true));
+  springs.push(new Spring(particles.at(-1), divs[0].p1, 3, 3))
+  springs.push(new Spring(particles.at(-2), divs[0].p4, 3, 3))
+  springs.push(new Spring(particles.at(-1), divs[0].p2, 3, 3))
+  springs.push(new Spring(particles.at(-2), divs[0].p3, 3, 3))
 
   // MAIN FUNCTION
   function main() {
