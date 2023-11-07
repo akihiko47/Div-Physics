@@ -120,22 +120,20 @@ class Joint {
 }
 
 class Mouse {
-    constructor(canvas, x=0, y=0, pickRadius=50) {
-        this.canvas = canvas;
+    constructor(x=0, y=0, pickRadius=50) {
         this.x = x;
         this.y = y;
         this.down = false;
         this.pickRadius = pickRadius;
         this.closestParticle;
-        this.canvas.addEventListener("mousemove", event => this.updatePosition(canvas, event));
-        this.canvas.addEventListener("mousedown", () => this.down = true);
-        this.canvas.addEventListener("mouseup", () => this.down = false);
+        window.addEventListener("mousemove", event => this.updatePosition(event));
+        window.addEventListener("mousedown", () => this.down = true);
+        window.addEventListener("mouseup", () => this.down = false);
     }
 
-    updatePosition(canvas, event) {
-        let rect = canvas.getBoundingClientRect(); 
-        this.x = (event.clientX - rect.left) / (rect.right - rect.left) * canvas.width;
-        this.y = (event.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height;
+    updatePosition(event) {
+        this.x = event.x;
+        this.y = event.y;
     }
 
     applyPickUp(particles) {
@@ -180,10 +178,10 @@ class PhysicsDiv {
 
     create(particles, joints) {
 
-        this.p1 = new Particle(this.x, this.y, 5);
-        this.p2 = new Particle(this.x, this.y + this.height, 5);
-        this.p3 = new Particle(this.x + this.width, this.y + this.height, 5);
-        this.p4 = new Particle(this.x + this.width, this.y, 5);
+        this.p1 = new Particle(this.x, this.y, 10);
+        this.p2 = new Particle(this.x, this.y + this.height, 10);
+        this.p3 = new Particle(this.x + this.width, this.y + this.height, 10);
+        this.p4 = new Particle(this.x + this.width, this.y, 10);
 
         particles.push(this.p1);
         particles.push(this.p2);
@@ -197,13 +195,12 @@ class PhysicsDiv {
         joints.push(new Joint(this.p1, this.p3));
         joints.push(new Joint(this.p2, this.p4));
 
-        let element = document.createElement("div");
+        let element = document.getElementById(this.id);
         element.style.left = this.p1.x_now + "px";
         element.style.top = this.p1.y_now + "px";
         element.style.width = this.width + "px";
         element.style.height = this.height + "px";
         element.style.transformOrigin = '0px 0px';
-        element.id = this.id
         element.style.position = 'fixed';
         document.getElementById('main').appendChild(element);
 

@@ -19,7 +19,9 @@ window.onload = function () {
   let secPrev = 0; // variable for storing the end time of the previous frame
   let secPassed = 0; // time betweeen frames
 
-  divs.push(new PhysicsDiv(200, 200, 200, 200, "first", particles, joints))
+  let mouse = new Mouse();
+
+  divs.push(new PhysicsDiv(width/2-125, height/2, 250, 150, "div-first-test", particles, joints));
 
   // MAIN FUNCTION
   function main() {
@@ -34,12 +36,14 @@ window.onload = function () {
     for (let i = 0; i < subSteps; i++) {
       applyGravity(particles, G);
       update(particles, springs, joints, secPassed / subSteps);
-      
+
       drawDivs(divs);
       drawParticles(particles);
 
       // this function prevents particles from falling off the screen
       applyConstraint(particles, width, height);
+
+      mouse.applyPickUp(particles);
     }
 
     secPassed = (secNow - secPrev) / 1000; // get frame time and convers to seconds
@@ -88,6 +92,6 @@ window.onload = function () {
   }
 
   // addRect();
-  addRope();
+  // addRope();
   main();
 };
