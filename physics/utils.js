@@ -1,5 +1,3 @@
-
-
 function drawParticles(particles) {
     for (let particle of particles) {
         if (particle.radius) {

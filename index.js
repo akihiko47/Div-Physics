@@ -58,46 +58,5 @@ window.onload = function () {
     requestAnimationFrame(main); // continue main loop
   }
 
-  function addRect() {
-        
-    // add rectangle vertices
-    // particle => x, y, radius(default=0), color(default=white), anchored(default=false)
-    // add particle to particles list to update and draw
-    particles.push(new Particle(500, 700, 15));
-    particles.push(new Particle(500, 500, 15));
-    particles.push(new Particle(700, 500, 15));
-    particles.push(new Particle(700, 700, 15));
-
-    // add rectangle edges
-    // spring => particle1, particle2, strength, damping, width(default=0) color(default=white)
-    // add spring to springs list to update and draw
-    joints.push(new Joint(particles[0], particles[1]));
-    joints.push(new Joint(particles[1], particles[2]));
-    joints.push(new Joint(particles[2], particles[3]));
-    joints.push(new Joint(particles[3], particles[0]));
-    joints.push(new Joint(particles[0], particles[2]));
-    joints.push(new Joint(particles[3], particles[1]));
-  }
-
-  function addRope() {
-    // add anchor
-    // particle => x, y, radius(default=0), color(default=white), anchored(default=false)
-    particles.push(new Particle(900, 500, 15, undefined, true))
-
-    // add 15 rope particles
-    // particle => x, y, radius(default=0), color(default=white), anchored(default=false)
-    for (let i = 0; i < 15; i++) {
-        particles.push(new Particle(935 + (35 + i) * i, 500, 15 + i))
-    }
-
-    // add rigid joints between rope particles
-    // joint => particle1, particle2, width(default=0) color(default=white)
-    for (let i = 0; i < 15; i++) {
-        joints.push(new Joint(particles[i+4], particles[i+5]))
-    }
-  }
-
-  // addRect();
-  // addRope();
   main();
 };
