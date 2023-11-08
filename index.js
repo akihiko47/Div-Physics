@@ -21,13 +21,14 @@ window.onload = function () {
 
   let mouse = new Mouse();
 
+  // ADD OBJECTS PART
   divs.push(new PhysicsDiv(width/2-125, 100, 250, 150, "div-first", particles, joints));
   particles.push(new Particle(width/2 - 150, 20, 15, "#49afc1", true));
   particles.push(new Particle(width/2 + 150, 20, 15, "#49afc1", true));
-  springs.push(new Spring(particles.at(-1), divs[0].p1, 1, 1))
-  springs.push(new Spring(particles.at(-2), divs[0].p4, 1, 1))
-  springs.push(new Spring(particles.at(-1), divs[0].p2, 1, 1))
-  springs.push(new Spring(particles.at(-2), divs[0].p3, 1, 1))
+  springs.push(new Spring(particles.at(-1), divs[0].p1, 2, 2))
+  springs.push(new Spring(particles.at(-2), divs[0].p4, 2, 2))
+  springs.push(new Spring(particles.at(-1), divs[0].p2, 2, 2))
+  springs.push(new Spring(particles.at(-2), divs[0].p3, 2, 2))
 
   divs.push(new PhysicsDiv(width/2-125, 370, 250, 150, "div-second", particles, joints));
   particles.push(new Particle(divs[0].p2.x_now, divs[0].p2.y_now + 20, 10, "#49afc1"))
@@ -69,7 +70,7 @@ window.onload = function () {
     // you can perform several updates per frame for greater accuracy
     // in this case, the frame time is divided by the number of sub-steps
     for (let i = 0; i < subSteps; i++) {
-      applyGravity(particles, 0, -(secNow/500 % 10) + 8);
+      applyGravity(particles, 0, -(secNow/800 % 10) + 8);
       update(particles, springs, joints, secPassed / subSteps);
 
       drawDivs(divs);
