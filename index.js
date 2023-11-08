@@ -55,8 +55,8 @@ window.onload = function () {
     joints.push(new Joint(particles.at(-3), particles.at(-1)))
   }
 
-  particles.push(new Particle(width/2, height-50, 50, "#49afc1"))
-  particles.push(new Particle(width/2 + 90, height-50, 40, "#49afc1"))
+  particles.push(new Particle(width/2, height-50, 50, "#49afc1", false, 'particle-big'))
+  particles.push(new Particle(width/2 + 90, height-50, 40, "#49afc1", false, 'particle-med'))
   particles.push(new Particle(width/2 - 90, height-50, 30, "#49afc1"))
 
   // MAIN FUNCTION

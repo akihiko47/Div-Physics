@@ -1,5 +1,5 @@
 class Particle {
-    constructor(x, y, radius=0, color="#ffffff", anchored=false) {
+    constructor(x, y, radius=0, color="#ffffff", anchored=false, id=undefined) {
         this.x = x;
         this.y = y;
         this.x_now = x;
@@ -14,6 +14,7 @@ class Particle {
         this.color = color;
         this.anchored = anchored;
         this.domElement = undefined;
+        this.id = id
 
         if (this.radius) {
             let element = document.createElement("div");
@@ -24,6 +25,9 @@ class Particle {
             element.style.borderRadius = radius + 'px';
             element.className = 'particle'
             element.style.position = 'fixed';
+            if (this.id != undefined) {
+                element.id = this.id
+            }
             document.getElementById('main').appendChild(element);
 
             this.domElement = element;
