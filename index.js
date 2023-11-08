@@ -21,13 +21,42 @@ window.onload = function () {
 
   let mouse = new Mouse();
 
-  divs.push(new PhysicsDiv(width/2-125, height/2, 250, 150, "div-first-test", particles, joints));
-  particles.push(new Particle(width/2 - 200, height/2 - 200, 15, "#49afc1", true));
-  particles.push(new Particle(width/2 + 200, height/2 - 200, 15, "#49afc1", true));
-  springs.push(new Spring(particles.at(-1), divs[0].p1, 3, 3))
-  springs.push(new Spring(particles.at(-2), divs[0].p4, 3, 3))
-  springs.push(new Spring(particles.at(-1), divs[0].p2, 3, 3))
-  springs.push(new Spring(particles.at(-2), divs[0].p3, 3, 3))
+  divs.push(new PhysicsDiv(width/2-125, 100, 250, 150, "div-first", particles, joints));
+  particles.push(new Particle(width/2 - 150, 20, 15, "#49afc1", true));
+  particles.push(new Particle(width/2 + 150, 20, 15, "#49afc1", true));
+  springs.push(new Spring(particles.at(-1), divs[0].p1, 1, 1))
+  springs.push(new Spring(particles.at(-2), divs[0].p4, 1, 1))
+  springs.push(new Spring(particles.at(-1), divs[0].p2, 1, 1))
+  springs.push(new Spring(particles.at(-2), divs[0].p3, 1, 1))
+
+  divs.push(new PhysicsDiv(width/2-125, 370, 250, 150, "div-second", particles, joints));
+  particles.push(new Particle(divs[0].p2.x_now, divs[0].p2.y_now + 20, 10, "#49afc1"))
+  joints.push(new Joint(divs[0].p2, particles.at(-1)))
+  particles.push(new Particle(divs[0].p3.x_now, divs[0].p3.y_now + 20, 10, "#49afc1"))
+  joints.push(new Joint(divs[0].p3, particles.at(-1)))
+  for (let i = 2; i < 6; i++) {
+    particles.push(new Particle(divs[0].p2.x_now, divs[0].p2.y_now + 20*i, 10, "#49afc1"))
+    joints.push(new Joint(particles.at(-3), particles.at(-1)))
+    particles.push(new Particle(divs[0].p3.x_now, divs[0].p3.y_now + 20*i, 10, "#49afc1"))
+    joints.push(new Joint(particles.at(-3), particles.at(-1)))
+  }
+  joints.push(new Joint(divs[1].p1, particles.at(-2)))
+  joints.push(new Joint(divs[1].p4, particles.at(-1)))
+
+  particles.push(new Particle(divs[1].p2.x_now, divs[1].p2.y_now + 20, 10, "#49afc1"))
+  joints.push(new Joint(divs[1].p2, particles.at(-1)))
+  particles.push(new Particle(divs[1].p3.x_now, divs[1].p3.y_now + 20, 10, "#49afc1"))
+  joints.push(new Joint(divs[1].p3, particles.at(-1)))
+  for (let i = 2; i < 12; i++) {
+    particles.push(new Particle(divs[1].p2.x_now, divs[1].p2.y_now + 20*i, 10, "#49afc1"))
+    joints.push(new Joint(particles.at(-3), particles.at(-1)))
+    particles.push(new Particle(divs[1].p3.x_now, divs[1].p3.y_now + 20*i, 10, "#49afc1"))
+    joints.push(new Joint(particles.at(-3), particles.at(-1)))
+  }
+
+  particles.push(new Particle(width/2, height-50, 50, "#49afc1"))
+  particles.push(new Particle(width/2 + 90, height-50, 40, "#49afc1"))
+  particles.push(new Particle(width/2 - 90, height-50, 30, "#49afc1"))
 
   // MAIN FUNCTION
   function main() {
@@ -40,7 +69,7 @@ window.onload = function () {
     // you can perform several updates per frame for greater accuracy
     // in this case, the frame time is divided by the number of sub-steps
     for (let i = 0; i < subSteps; i++) {
-      applyGravity(particles, G);
+      applyGravity(particles, 0, -(secNow/500 % 10) + 8);
       update(particles, springs, joints, secPassed / subSteps);
 
       drawDivs(divs);

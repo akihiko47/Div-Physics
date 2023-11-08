@@ -47,9 +47,9 @@ function drawDivs(divs) {
 //     }
 // }
 
-function applyGravity(particles, G) {
+function applyGravity(particles, G_x=0, G_y=0) {
     for (let particle of particles) {
-        particle.accelerate(0, G * 100);
+        particle.accelerate(G_x * 100, G_y * 100);
 	}
 }
 
